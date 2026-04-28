@@ -1,0 +1,96 @@
+# === Rider / JetBrains IDE ===
+.idea/
+*.sln.iml
+*.iws
+*.ipr
+*.sln.DotSettings.user
+.idea/.idea.*
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/dictionaries
+.idea/**/shelf
+.idea/httpRequests/
+
+# === Visual Studio Artifacts (для совместимости) ===
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# === Build outputs ===
+bin/
+obj/
+out/
+publish/
+TestResults/
+*.log
+*.tmp
+*.bak
+*.swp
+*.pdb
+
+# === .NET Configs ===
+appsettings.*.local.json
+launchSettings.json
+
+# === Dependencies ===
+packages/
+.nuget/
+*.nupkg
+*.snupkg
+
+# === Frontend (React) ===
+/client/node_modules/
+/client/dist/
+/client/build/
+/client/.env
+/client/.env.local
+/client/.env.*.local
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+/client/coverage/
+/client/*.tsbuildinfo
+
+# === Python (utils, embeddings, scripts) ===
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+*.npy
+*.npz
+*.ipynb_checkpoints
+.venv/
+venv/
+env/
+.env/
+pip-wheel-metadata/
+.DS_Store
+
+# === Local Databases & Qdrant / Ollama Data ===
+*.db
+*.sqlite
+/data/
+qdrant_storage/
+ollama/
+
+# === Logs ===
+logs/
+*.log
+
+# === Docker ===
+*.pid
+docker-compose.override.yml
+.env.docker
+
+# === System / OS ===
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+*.orig
+*.rej
+*.bak
