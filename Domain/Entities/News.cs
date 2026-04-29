@@ -8,6 +8,9 @@ public class News : BaseEntity
     public string OriginalUrl { get; protected set; }
     public DateTime DateAdded { get; protected set; }
     
+    private readonly List<Guid> _categoryIds = new();
+    public IReadOnlyCollection<Guid> CategoryIds => _categoryIds.AsReadOnly();
+
     protected News() {}
 
     internal News(string originalUrl, Guid sourceId, DateTime dateAdded)
@@ -17,13 +20,10 @@ public class News : BaseEntity
         DateAdded = dateAdded;
     }
     
-    public void SetSummary(string summary)
-    {
-        Summary = summary;
-    }
-    
-    public void SetTitle(string title)
+    public void Enrich(string title, string summary, IEnumerable<Guid> categoryIds)
     {
         Title = title;
+        Summary = summary;
+        _categoryIds.AddRange(categoryIds);
     }
 }
