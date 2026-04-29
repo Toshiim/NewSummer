@@ -25,7 +25,7 @@ public class Source : BaseEntity
         SiteUrl = siteUrl;
         FeedUrl = feedUrl;
         CreatedAt = DateTime.UtcNow;
-        IsActive = isActive;
+        IsActive = true;
     }
 
     public News AddNews(string originalUrl)

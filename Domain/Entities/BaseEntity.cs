@@ -13,7 +13,7 @@
 
         /// <summary>
         /// Создаёт сущность с указанным идентификатором.
-        /// Обычно используется ORM'ами при восстановлении объектов из БД.
+        /// Используется ORM при восстановлении объектов из БД.
         /// </summary>
         /// <param name="id">Идентификатор сущности.</param>
         protected BaseEntity(Guid id)
@@ -34,10 +34,6 @@
         /// Проверяет равенство двух сущностей по их идентификаторам.
         /// </summary>
         /// <param name="other">Сущность для сравнения.</param>
-        /// <returns>
-        /// true — если объект не является null и имеет такой же идентификатор;
-        /// false — иначе.
-        /// </returns>
         public bool Equals(BaseEntity? other)
         {
             return other is not null && Id.Equals(other.Id);

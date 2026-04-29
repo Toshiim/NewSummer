@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class Subscriber
+public class Subscriber : BaseEntity
 {
     /// <summary>
     /// Nullable - не во всех системах можно определить username
