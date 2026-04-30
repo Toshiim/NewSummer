@@ -1,14 +1,34 @@
 using Application;
 using Infrastructure;
+using Infrastructure.Database;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddApplication();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.MapGet("/health", async (AppDbContext db) =>
+    {
+        try
+        {
+            await db.Database.ExecuteSqlRawAsync("SELECT 1");
+            return Results.Ok(new { status = "healthy", timestamp = DateTime.UtcNow });
+        }
+        catch (Exception ex)
+        {
+            return Results.Json(
+                new { status = "unhealthy", error = ex.Message, timestamp = DateTime.UtcNow },
+                statusCode: 503);
+        }
+    })
+    .WithName("Health")
+    .WithOpenApi();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
