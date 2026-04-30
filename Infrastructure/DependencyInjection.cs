@@ -1,4 +1,5 @@
-﻿using Infrastructure.Database;
+﻿using Application.Interfaces;
+using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +16,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString, 
                 b => b.MigrationsAssembly("Migrations")));
-        
-        
+
+        services.AddScoped<IDatabaseHealthService, SqlDbHealthService>();
         return services;
     }
 }

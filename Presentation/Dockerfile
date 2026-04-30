@@ -8,6 +8,10 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Presentation/Presentation.csproj", "Presentation/"]
+COPY ["Application/Application.csproj", "Application/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["Migrations/Migrations.csproj", "Migrations/"]
 RUN dotnet restore "Presentation/Presentation.csproj"
 COPY . .
 WORKDIR "/src/Presentation"
