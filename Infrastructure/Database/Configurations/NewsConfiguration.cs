@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Database.Configurations;
 
-public class NewsConfiguration : IEntityTypeConfiguration<News>
+public class NewsConfiguration : IEntityTypeConfiguration<Article>
 {
-    public void Configure(EntityTypeBuilder<News> builder)
+    public void Configure(EntityTypeBuilder<Article> builder)
     {
         builder.HasKey(n => n.Id);
         builder.Property(n => n.OriginalUrl).IsRequired();
@@ -19,6 +19,6 @@ public class NewsConfiguration : IEntityTypeConfiguration<News>
             .UsingEntity<Dictionary<string, object>>(
                 "NewsCategory",
                 j => j.HasOne<Category>().WithMany().HasForeignKey("CategoryId"),
-                j => j.HasOne<News>().WithMany().HasForeignKey("NewsId"));
+                j => j.HasOne<Article>().WithMany().HasForeignKey("NewsId"));
     }
 }

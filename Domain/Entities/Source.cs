@@ -14,8 +14,8 @@ public class Source : BaseEntity
     public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
     
-    private readonly List<News> _news = new();
-    public IReadOnlyCollection<News> News => _news.AsReadOnly();
+    private readonly List<Article> _articles = new();
+    public IReadOnlyCollection<Article> Articles => _articles.AsReadOnly();
     
     protected Source() {}
     
@@ -28,10 +28,10 @@ public class Source : BaseEntity
         IsActive = true;
     }
 
-    public News AddNews(string originalUrl)
+    public Article AddNews(string originalUrl)
     {
-        var news = new News(originalUrl,  Id, DateTime.UtcNow);
-        _news.Add(news);
+        var news = new Article(originalUrl,  Id, DateTime.UtcNow);
+        _articles.Add(news);
         return news;
     }
 }

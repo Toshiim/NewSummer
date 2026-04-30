@@ -14,7 +14,7 @@ public class SourceConfiguration : IEntityTypeConfiguration<Source>
         builder.Property(s => s.SiteUrl).IsRequired();
         builder.HasIndex(s => s.FeedUrl).IsUnique();
         
-        builder.HasMany(s => s.News)
+        builder.HasMany(s => s.Articles)
             .WithOne()
             .HasForeignKey(n => n.SourceId)
             .OnDelete(DeleteBehavior.Cascade);

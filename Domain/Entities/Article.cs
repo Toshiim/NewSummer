@@ -1,6 +1,6 @@
 ﻿namespace Domain.Entities;
 
-public class News : BaseEntity
+public class Article : BaseEntity
 {
     public string? Title { get; protected set; }
     public string? Summary { get; protected set; }
@@ -11,9 +11,9 @@ public class News : BaseEntity
     private readonly List<Guid> _categoryIds = new();
     public IReadOnlyCollection<Guid> CategoryIds => _categoryIds.AsReadOnly();
 
-    protected News() {}
+    protected Article() {}
 
-    internal News(string originalUrl, Guid sourceId, DateTime dateAdded)
+    internal Article(string originalUrl, Guid sourceId, DateTime dateAdded)
     {
         OriginalUrl = originalUrl;
         SourceId = sourceId;
