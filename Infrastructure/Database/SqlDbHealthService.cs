@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Application.Interfaces;
+﻿using Application.Common.Interfaces;
+using Microsoft.EntityFrameworkCore;
+
 namespace Infrastructure.Database;
 
 public class SqlDbHealthService(AppDbContext db) : IDatabaseHealthService

@@ -19,7 +19,7 @@ public class Source : BaseEntity
     
     protected Source() {}
     
-    public Source(string name, string siteUrl, string feedUrl, DateTime createdAt, bool isActive)
+    public Source(string name, string siteUrl, string feedUrl)
     {
         Name = name;
         SiteUrl = siteUrl;

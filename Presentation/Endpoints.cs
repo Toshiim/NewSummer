@@ -1,4 +1,8 @@
-﻿using Application.Interfaces;
+﻿using Application.Common.Interfaces;
+using Application.Common.Models;
+using Application.UseCases;
+using Microsoft.AspNetCore.Mvc;
+using Presentation.DTO;
 
 
 namespace Presentation;
@@ -22,6 +26,29 @@ public static class Endpoints
             })
             .WithName("Health")
             .WithOpenApi();
+
+        app.MapGet("/articles", async (GetArticlesUseCase useCase, [AsParameters] GetArticlesRequest request, CancellationToken ct) =>
+            {
+                var query = new GetArticlesQuery(
+                    Page: request.Page ?? 1,
+                    PageSize: request.PageSize ?? 20,
+                    SortBy: request.SortBy ?? SortBy.DateAdded,
+                    SortOrder: request.SortOrder ?? SortOrder.Desc,
+                    SourceId: request.SourceId,
+                    CategoryId: request.CategoryId,
+                    SourceName: request.SourceName
+                );
+
+                return await useCase.GetArticles(query, ct);
+            })
+            .WithName("GetArticles")
+            .WithOpenApi();
+
+        app.MapPost("/sources", async (CreateSourceUseCase useCase, [FromBody] CreateSourceCommand command, CancellationToken ct) =>
+        {
+            return await useCase.CreateSource(command, ct);
+        });
+
+        app.MapGet("/sources", async (GetSourcesUseCase useCase, CancellationToken ct) => await useCase.GetSources(ct));
     }
-    
 }

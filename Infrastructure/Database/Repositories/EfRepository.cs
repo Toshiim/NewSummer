@@ -18,6 +18,6 @@ public class EfRepository<T> : IRepository<T> where T: BaseEntity
     public virtual async Task<T?> GetByIdAsync(Guid id)
         => await DbSet.FindAsync(id);
 
-    public virtual async Task AddAsync(T entity)
+    public virtual async Task AddAsync(T entity, CancellationToken ct = default)
         => await DbSet.AddAsync(entity);
 }
