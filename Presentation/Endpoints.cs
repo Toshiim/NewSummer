@@ -44,11 +44,13 @@ public static class Endpoints
             .WithName("GetArticles")
             .WithOpenApi();
 
-        app.MapPost("/sources", async (CreateSourceUseCase useCase, [FromBody] CreateSourceCommand command, CancellationToken ct) =>
-        {
-            return await useCase.CreateSource(command, ct);
-        });
+        app.MapPost("/sources",
+            async (CreateSourceUseCase useCase, [FromBody] CreateSourceCommand command, CancellationToken ct) =>  await useCase.CreateSource(command, ct));
 
-        app.MapGet("/sources", async (GetSourcesUseCase useCase, CancellationToken ct) => await useCase.GetSources(ct));
+        app.MapGet("/sources",
+            async (GetSourcesUseCase useCase, CancellationToken ct) => await useCase.GetSources(ct));
+
+        app.MapPost("/categories",
+            async (CreateCategoryUseCase useCase, [FromBody]CreateCategoryCommand command, CancellationToken ct) => await useCase.CreateCategory(command, ct));
     }
 }

@@ -12,6 +12,7 @@ public static class DependencyInjection
         services.AddScoped<GetSourcesUseCase>();
         services.AddScoped<CreateSourceUseCase>();
         services.AddScoped<ScrapArticleUseCase>();
+        services.AddScoped<CreateCategoryUseCase>();
         return services;
     }
 }
