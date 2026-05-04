@@ -1,6 +1,8 @@
-﻿namespace Application.Common.Interfaces;
+﻿using Application.Common.Models;
+
+namespace Application.Common.Interfaces;
 
 public interface ISummaryService
 {
-    Task<string> SummarizeAsync(string text, CancellationToken ct = default);
+    Task<SummarizedArticle> SummarizeAsync(string text, List<string> categories, CancellationToken ct = default);
 }

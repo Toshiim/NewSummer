@@ -29,7 +29,7 @@ if (app.Environment.IsDevelopment())
 RecurringJob.AddOrUpdate<ScrapArticleUseCase>(
     "scrape-news",
     job => job.ExecuteAsync(CancellationToken.None),
-    "*/2 * * * *");
+    Cron.Never); 
 
 
 app.MapEndpoints();

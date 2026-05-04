@@ -13,11 +13,11 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
         builder.HasIndex(n => n.OriginalUrl).IsUnique();
         builder.Property(n => n.Title);
         builder.Property(n => n.Summary);
-
-        builder.HasMany<Category>()
+        
+        builder.HasMany(a => a.Categories)
             .WithMany()
             .UsingEntity<Dictionary<string, object>>(
-                "NewsCategory",
+                "ArticleCategory",
                 j => j.HasOne<Category>().WithMany().HasForeignKey("CategoryId"),
                 j => j.HasOne<Article>().WithMany().HasForeignKey("NewsId"));
     }

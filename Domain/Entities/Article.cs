@@ -8,8 +8,8 @@ public class Article : BaseEntity
     public string OriginalUrl { get; protected set; }
     public DateTime DateAdded { get; protected set; }
     
-    private readonly List<Guid> _categoryIds = new();
-    public IReadOnlyCollection<Guid> CategoryIds => _categoryIds.AsReadOnly();
+    private readonly List<Category> _categories = new();
+    public IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
 
     protected Article() {}
 
@@ -20,10 +20,12 @@ public class Article : BaseEntity
         DateAdded = dateAdded;
     }
     
-    public void Enrich(string title, string summary, IEnumerable<Guid> categoryIds)
+
+
+    public void Enrich(string title, string summary, IEnumerable<Category> categories)
     {
         Title = title;
         Summary = summary;
-        _categoryIds.AddRange(categoryIds);
+        _categories.AddRange(categories);
     }
 }

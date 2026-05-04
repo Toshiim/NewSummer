@@ -22,6 +22,21 @@ namespace Migrations.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ArticleCategory", b =>
+                {
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("NewsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("CategoryId", "NewsId");
+
+                    b.HasIndex("NewsId");
+
+                    b.ToTable("ArticleCategory");
+                });
+
             modelBuilder.Entity("Domain.Entities.Article", b =>
                 {
                     b.Property<Guid>("Id")
@@ -138,31 +153,7 @@ namespace Migrations.Migrations
                     b.ToTable("Subscribers");
                 });
 
-            modelBuilder.Entity("NewsCategory", b =>
-                {
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("NewsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("CategoryId", "NewsId");
-
-                    b.HasIndex("NewsId");
-
-                    b.ToTable("NewsCategory");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Article", b =>
-                {
-                    b.HasOne("Domain.Entities.Source", null)
-                        .WithMany("Articles")
-                        .HasForeignKey("SourceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("NewsCategory", b =>
+            modelBuilder.Entity("ArticleCategory", b =>
                 {
                     b.HasOne("Domain.Entities.Category", null)
                         .WithMany()
@@ -173,6 +164,15 @@ namespace Migrations.Migrations
                     b.HasOne("Domain.Entities.Article", null)
                         .WithMany()
                         .HasForeignKey("NewsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Entities.Article", b =>
+                {
+                    b.HasOne("Domain.Entities.Source", null)
+                        .WithMany("Articles")
+                        .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

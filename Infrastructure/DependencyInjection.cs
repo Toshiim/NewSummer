@@ -28,6 +28,7 @@ public static class DependencyInjection
         services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
         services.AddScoped<IArticleRepository, ArticleRepository>();
         services.AddScoped<ISourceRepository, SourcesRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         
         services.AddSingleton<IOllamaApiClient>(sp =>

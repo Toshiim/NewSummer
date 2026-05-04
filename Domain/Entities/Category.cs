@@ -1,6 +1,8 @@
-﻿namespace Domain.Entities;
+﻿using System.ComponentModel;
 
-public class Category : BaseEntity  // не AggregateRoot
+namespace Domain.Entities;
+
+public class Category : BaseEntity 
 {
     /// <summary>
     /// Для понятного отображения пользователю
@@ -18,4 +20,11 @@ public class Category : BaseEntity  // не AggregateRoot
     public bool IsActive { get; private set; }
 
     public void Deactivate() => IsActive = false;
+
+    public Category(string displayName, string slug)
+    {
+        DisplayName = displayName;
+        Slug = slug;
+        IsActive = true;
+    }
 }
