@@ -5,7 +5,7 @@
 - 3 эндпоинта для управления сервисом(Get: /articles(с пагинацией, фильтрацией и сортировкой), /sources. Post /sources)
 - RSS парсинг 
 - Кравлинг статей(черезе [SmartReader](https://github.com/Strumenta/SmartReader))
-- Суммаризация без категоризации
+- Суммаризация без категоризации(OllamaSharp)
 - Hangfire
 - Всё поднимается через docker-compose up (если у вас видеокарта Nvidia)
 
