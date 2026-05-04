@@ -28,7 +28,7 @@ public class Source : BaseEntity
         IsActive = true;
     }
 
-    public Article AddNews(string originalUrl)
+    public Article AddNews(string originalUrl) // TODO: rename
     {
         var news = new Article(originalUrl,  Id, DateTime.UtcNow);
         _articles.Add(news);

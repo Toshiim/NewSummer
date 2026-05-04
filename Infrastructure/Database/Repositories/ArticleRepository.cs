@@ -9,6 +9,9 @@ public class ArticleRepository : EfRepository<Article>, IArticleRepository
 {
     public ArticleRepository(AppDbContext dbContext) : base(dbContext){}
     
+    public Task<bool> ExistsByUrlAsync(string url, CancellationToken ct)
+        =>  DbSet.AnyAsync(a => a.OriginalUrl == url, ct);
+    
     public async Task<PagedResult<ArticleDto>> GetPagedArticlesAsync(
         GetArticlesQuery query, 
         CancellationToken ct = default)

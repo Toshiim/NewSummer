@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<GetArticlesUseCase>();
         services.AddScoped<GetSourcesUseCase>();
         services.AddScoped<CreateSourceUseCase>();
+        services.AddScoped<ScrapArticleUseCase>();
         return services;
     }
 }

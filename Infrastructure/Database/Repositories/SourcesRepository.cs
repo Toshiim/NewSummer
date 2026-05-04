@@ -9,4 +9,7 @@ public class SourcesRepository : EfRepository<Source>, ISourceRepository
     public SourcesRepository(AppDbContext dbContext) : base(dbContext){}
     
     public Task<List<Source>> GetSourcesAsync(CancellationToken ct) => DbContext.Sources.AsNoTracking().ToListAsync(ct);
+    
+    public Task<List<Source>> GetActiveAsync(CancellationToken ct)
+        =>  DbSet.AsNoTracking().Where(s => s.IsActive).ToListAsync(ct);
 }

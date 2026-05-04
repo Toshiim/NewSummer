@@ -1,4 +1,6 @@
 using Application;
+using Application.UseCases;
+using Hangfire;
 using Infrastructure;
 using Presentation;
 
@@ -17,7 +19,19 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHangfireDashboard("/hangfire", new DashboardOptions
+    {
+        Authorization = new[] { new MyAuthorizationFilter() }
+    });
 }
+
+
+RecurringJob.AddOrUpdate<ScrapArticleUseCase>(
+    "scrape-news",
+    job => job.ExecuteAsync(CancellationToken.None),
+    "*/2 * * * *");
+
+
 app.MapEndpoints();
 app.UseHttpsRedirection();
 
