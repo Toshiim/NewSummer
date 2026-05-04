@@ -37,7 +37,7 @@ public class ScrapArticleUseCase
             {
                 if (await _articles.ExistsByUrlAsync(item.Url, ct)) continue;
 
-                var article = source.AddNews(item.Url);
+                var article = source.AddArticle(item.Url);
                 var summary = await _summarizer.SummarizeAsync(item.RawText, ct);
                 article.Enrich(item.Title, summary, []);
                 await _articles.AddAsync(article, ct);
