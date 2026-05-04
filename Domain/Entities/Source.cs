@@ -30,8 +30,8 @@ public class Source : BaseEntity
 
     public Article AddArticle(string originalUrl) 
     {
-        var news = new Article(originalUrl,  Id, DateTime.UtcNow);
-        _articles.Add(news);
-        return news;
+        var article = new Article(originalUrl,  Id, DateTime.UtcNow);
+        _articles.Add(article);
+        return article;
     }
 }
