@@ -10,7 +10,10 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=newsummer;Username=postgres;Password=postgres
     depends_on:
-      - db
+      db:
+        condition: service_started
+      ollama:
+        condition: service_started
 
   db:
     image: postgres:15-alpine
@@ -24,5 +27,25 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  ollama:
+    image: ollama/ollama:0.20.0
+    container_name: ollama_NewSummer
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+      - ./ollama_entrypoint.sh:/entrypoint.sh
+    environment:
+        - OLLAMA_CONTEXT_LENGTH=4096
+        - OLLAMA_KEEP_ALIVE=-1
+    entrypoint: ["/entrypoint.sh"]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 volumes:
   postgres_data:
+  ollama_data:
