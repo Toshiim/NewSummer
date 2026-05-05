@@ -34,6 +34,7 @@ public class TelegramBotHandler
             IBotCommand? command = commandName switch
             {
                 "/start" => scope.ServiceProvider.GetRequiredService<StartCommand>(),
+                "/topics" => scope.ServiceProvider.GetRequiredService<ShowCategoriesCommand>(),
                 _ => null
             };
 

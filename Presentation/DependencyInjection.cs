@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddHostedService<TelegramBotBackgroundService>();
 
         services.AddScoped<StartCommand>();
+        services.AddScoped<ShowCategoriesCommand>();
+        
         return services;
     }
 }
