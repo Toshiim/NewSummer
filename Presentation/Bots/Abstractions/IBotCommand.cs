@@ -2,5 +2,5 @@
 
 public interface IBotCommand
 {
-    Task ExecuteAsync(string chatId, string args, IMessageSender sender, CancellationToken ct);
+    Task ExecuteAsync(UserContext userContext, string args, IMessageSender sender, CancellationToken ct);
 }

@@ -12,11 +12,11 @@ public class StartCommand : IBotCommand
         _registerUseCase = registerUseCase;
     }
 
-    public async Task ExecuteAsync(string chatId, string args, IMessageSender sender, CancellationToken ct)
+    public async Task ExecuteAsync(UserContext userContext, string _, IMessageSender sender, CancellationToken ct)
     {
-        await _registerUseCase.ExecuteAsync(chatId, null, null, ct);
+        await _registerUseCase.ExecuteAsync(userContext.ChatId, userContext.Username, userContext.UserId, ct);
 
-        var welcomeText = "Привет! Ты успешно зарегистрирован в системе NewSummer.";
-        await sender.SendAsync(chatId, welcomeText, ct);
+        var welcomeText = $"Привет {userContext.Username}! Ты успешно зарегистрирован в системе NewSummer.";
+        await sender.SendAsync(userContext.ChatId, welcomeText, ct);
     }
 }

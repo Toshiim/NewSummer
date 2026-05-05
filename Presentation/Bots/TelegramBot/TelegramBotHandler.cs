@@ -39,7 +39,13 @@ public class TelegramBotHandler
 
             if (command != null)
             {
-                await command.ExecuteAsync(update.Message.Chat.Id.ToString(), args, sender, ct);
+                var userContext = new UserContext(
+                    Username: update.Message.From?.Username ?? "Unknown", 
+                    ChatId: update.Message.Chat.Id.ToString(),
+                    UserId: update.Message.From?.Id.ToString() ?? throw new InvalidOperationException("User ID is missing"),
+                    Platform: "Telegram"
+                );
+                await command.ExecuteAsync(userContext, args, sender, ct);
             }
         }
         catch (Exception ex)
