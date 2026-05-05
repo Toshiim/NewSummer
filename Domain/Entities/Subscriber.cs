@@ -18,8 +18,13 @@ public class Subscriber : BaseEntity
     /// </example>>
     public string UserPlatformId  { get; protected set; }
     public string ChatPlatformId  { get; protected set; }
-    
-    public string? Name { get; protected set; }
     public DateTime CreatedAt { get; protected set; }
-    
+
+    public Subscriber(string username, string userPlatformId, string chatPlatformId)
+    {
+        Username = username;
+        UserPlatformId = userPlatformId;
+        ChatPlatformId = chatPlatformId;
+        CreatedAt = DateTime.UtcNow;
+    }
 }
