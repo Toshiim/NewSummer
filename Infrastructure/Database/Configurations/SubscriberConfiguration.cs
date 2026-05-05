@@ -11,6 +11,7 @@ public class SubscriberConfiguration : IEntityTypeConfiguration<Subscriber>
         builder.HasKey(s => s.Id);
         builder.Property(s => s.UserPlatformId).IsRequired();
         builder.HasIndex(s => s.UserPlatformId).IsUnique();
+        builder.Property(s => s.ChatPlatformId).IsRequired();
         builder.Property(s => s.Username);
     }
 }

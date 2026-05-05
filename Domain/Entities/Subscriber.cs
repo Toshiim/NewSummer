@@ -17,6 +17,7 @@ public class Subscriber : BaseEntity
     /// Для объединения всех этих форматов использую string
     /// </example>>
     public string UserPlatformId  { get; protected set; }
+    public string ChatPlatformId  { get; protected set; }
     
     public string? Name { get; protected set; }
     public DateTime CreatedAt { get; protected set; }
