@@ -32,7 +32,7 @@ public static class Endpoints
                 var query = new GetArticlesQuery(
                     Page: request.Page ?? 1,
                     PageSize: request.PageSize ?? 20,
-                    SortBy: request.SortBy ?? SortBy.DateAdded,
+                    SortBy: request.SortBy ?? SortBy.PublicationDate,
                     SortOrder: request.SortOrder ?? SortOrder.Desc,
                     SourceId: request.SourceId,
                     CategoryId: request.CategoryId,
