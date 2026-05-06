@@ -3,11 +3,11 @@ using Presentation.Bots.Abstractions;
 
 namespace Presentation.Bots.Commands;
 
-public class SubscribeCommand : IBotCommand
+public class UnsubscribeCommand : IBotCommand
 {
-    private readonly SubscribeForCategoresUseCase _useCase;
+    private readonly UnsubscribeForCategoresUseCase _useCase;
 
-    public SubscribeCommand(SubscribeForCategoresUseCase useCase)
+    public UnsubscribeCommand(UnsubscribeForCategoresUseCase useCase)
     {
         _useCase = useCase;
     }
