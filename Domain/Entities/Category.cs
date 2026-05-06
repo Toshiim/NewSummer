@@ -10,7 +10,7 @@ public class Category : BaseEntity
     public string DisplayName  { get; private set; }
     
     /// <summary>
-    /// Псеводоним внутри системы
+    /// Псеводоним внутри системы. ВСЕГДА ToLower
     /// </summary>
     public string Slug { get; private set; }
     
@@ -21,10 +21,12 @@ public class Category : BaseEntity
 
     public void Deactivate() => IsActive = false;
 
+    protected Category() { }
+    
     public Category(string displayName, string slug)
     {
         DisplayName = displayName;
-        Slug = slug;
+        Slug = slug.ToLower();
         IsActive = true;
     }
 }
