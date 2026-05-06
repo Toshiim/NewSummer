@@ -11,7 +11,6 @@ public class Source : BaseEntity
     /// URL для парсинга
     /// </summary>
     public string FeedUrl { get; private set; }
-    public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
     
     private readonly List<Article> _articles = new();
@@ -24,13 +23,12 @@ public class Source : BaseEntity
         Name = name;
         SiteUrl = siteUrl;
         FeedUrl = feedUrl;
-        CreatedAt = DateTime.UtcNow;
         IsActive = true;
     }
 
     public Article AddArticle(string originalUrl) 
     {
-        var article = new Article(originalUrl,  Id, DateTime.UtcNow);
+        var article = new Article(originalUrl,  Id);
         _articles.Add(article);
         return article;
     }
