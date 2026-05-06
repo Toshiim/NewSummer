@@ -17,11 +17,11 @@ public class ShowCategoriesCommand : IBotCommand
         var categories = await _useCase.ExecuteAsync(ct);
         
         var categoryLines = categories
-            .Select(c => $" `{c.Slug}` — **{c.DisplayName}**");
+            .Select(c => $"`{c.Slug}` — **{c.DisplayName}**");
 
         var response = " *Список активных категорий:* \n\n" +
                        string.Join("\n", categoryLines) +
-                       "\n\n_Для подписки на категории напиши их тэг через запятую_";    
+                       "\n\n_Для подписки на категории просто напиши тэг /subscribe и перечисли нужные_";    
         
         await sender.SendAsync(userContext.ChatId, response, ct);
     }
