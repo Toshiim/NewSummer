@@ -15,8 +15,14 @@ public class RegisterSubscriberUseCase
     }
     public async Task ExecuteAsync(string chatId, string username, string userId, CancellationToken ct)
     {
-        var subscriber = new Subscriber(username, userId, chatId);
-        await _repository.AddAsync(subscriber, ct);
-        await _unitOfWork.SaveChangesAsync();
+        var subscriber = await _repository.GetByPlatformIdAsync(userId, ct);
+
+        if (subscriber == null)
+        {
+            subscriber = new Subscriber(username, userId, chatId);
+            await _repository.AddAsync(subscriber, ct);
+            await _unitOfWork.SaveChangesAsync();
+        }
+
     }
 }

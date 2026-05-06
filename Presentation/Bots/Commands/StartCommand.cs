@@ -16,7 +16,8 @@ public class StartCommand : IBotCommand
     {
         await _useCase.ExecuteAsync(userContext.ChatId, userContext.Username, userContext.UserId, ct);
 
-        var welcomeText = $"Привет {userContext.Username}! Ты успешно зарегистрирован в системе NewSummer.";
+        var safeUsername = userContext.Username?.Replace("_", "\\_") ?? "User";
+        var welcomeText = $"Привет, {safeUsername}! Ты в системе.";
         await sender.SendAsync(userContext.ChatId, welcomeText, ct);
     }
 }
