@@ -26,6 +26,8 @@ public class SubscribeForCategoresUseCase
         var categories = await _categoryRepository.GetByTags(normalizedTags, ct);
         
         var subscriber = await _subscriberRepository.GetByPlatformIdAsync(userId, ct);
+        if (subscriber == null) throw new NullReferenceException("subscriber is null");
+        
         foreach (var category in categories) subscriber.SubscribeTo(category);
 
         await _unitOfWork.SaveChangesAsync();

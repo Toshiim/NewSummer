@@ -26,6 +26,7 @@ public class UnsubscribeForCategoresUseCase
         var categories = await _categoryRepository.GetByTags(normalizedTags, ct);
         
         var subscriber = await _subscriberRepository.GetByPlatformIdAsync(userId, ct);
+        if (subscriber == null) throw new NullReferenceException("subscriber is null");
         foreach (var category in categories) subscriber.UnsubscribeFrom(category);
 
         await _unitOfWork.SaveChangesAsync();

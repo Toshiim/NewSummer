@@ -15,6 +15,7 @@ public class ShowSubscriptionsUseCase
     public async Task<Category[]> ExecuteAsync(string userId, CancellationToken ct)
     {
         var subscriber = await _subscriberRepository.GetByPlatformIdAsync(userId, ct);
+        if (subscriber == null) throw new NullReferenceException("subscriber is null");
         return subscriber.Categories.ToArray();
     }
 }
