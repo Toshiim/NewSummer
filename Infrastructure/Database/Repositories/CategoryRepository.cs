@@ -11,5 +11,11 @@ public class CategoryRepository : EfRepository<Category>, ICategoryRepository
     
     public Task<List<Category>> GetActiveAsync(CancellationToken ct)
         =>  DbSet.Where(s => s.IsActive).ToListAsync(ct);
+    
+    public  Task<Category[]> GetByTags(string[] tags, CancellationToken ct)
+    => DbSet
+        .AsNoTracking()
+        .Where(s => tags.Contains(s.Slug))
+        .ToArrayAsync(ct);
 
 }

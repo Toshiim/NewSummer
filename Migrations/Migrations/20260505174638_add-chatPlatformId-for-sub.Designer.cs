@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260505174638_add-chatPlatformId-for-sub")]
+    partial class addchatPlatformIdforsub
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,21 +38,6 @@ namespace Migrations.Migrations
                     b.HasIndex("NewsId");
 
                     b.ToTable("ArticleCategory");
-                });
-
-            modelBuilder.Entity("CategorySubscriber", b =>
-                {
-                    b.Property<Guid>("CategoriesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SubscriberId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("CategoriesId", "SubscriberId");
-
-                    b.HasIndex("SubscriberId");
-
-                    b.ToTable("SubscriberCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Article", b =>
@@ -154,6 +142,9 @@ namespace Migrations.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
                     b.Property<string>("UserPlatformId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -180,21 +171,6 @@ namespace Migrations.Migrations
                     b.HasOne("Domain.Entities.Article", null)
                         .WithMany()
                         .HasForeignKey("NewsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CategorySubscriber", b =>
-                {
-                    b.HasOne("Domain.Entities.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.Subscriber", null)
-                        .WithMany()
-                        .HasForeignKey("SubscriberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -29,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<IArticleRepository, ArticleRepository>();
         services.AddScoped<ISourceRepository, SourcesRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ISubscriberRepository, SubscriberRepository>();
         services.AddScoped<IUnitOfWork, EfUnitOfWork>();
         
         services.AddSingleton<IOllamaApiClient>(sp =>

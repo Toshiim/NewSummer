@@ -13,6 +13,11 @@ public static class DependencyInjection
         services.AddScoped<CreateSourceUseCase>();
         services.AddScoped<ScrapArticleUseCase>();
         services.AddScoped<CreateCategoryUseCase>();
+        services.AddScoped<RegisterSubscriberUseCase>();
+        services.AddScoped<GetCategoriesUseCase>();
+        services.AddScoped<SubscribeForCategoresUseCase>();
+        services.AddScoped<UnsubscribeForCategoresUseCase>();
+        services.AddScoped<ShowSubscriptionsUseCase>();
         return services;
     }
 }
