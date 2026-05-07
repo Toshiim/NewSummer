@@ -41,29 +41,29 @@ public class OllamaSummarizer : ISummaryService
             Model = _model,
             Format = "json", 
             Prompt = $$"""
-                       Analyze the provided article and perform two tasks:
-                       1. Summarize the article in 2-3 sentences.
-                       2. Categorize the article using ONLY the provided categories list.
+                       Проанализируй предоставленную статью и выполни две задачи:
+                       1. Сделай краткое резюме статьи (2-3 предложения).
+                       2. Присвой статье категории, используя ТОЛЬКО предоставленный список категорий.
 
-                       Categories list: [{{categoriesString}}]
+                       Список категорий: [{{categoriesString}}]
 
-                       Respond ONLY with a JSON object.
-                       The language of the summary and categories must match the article language where applicable.
+                       Ответь СТРОГО в формате JSON.
+                       Важно: Текст резюме и выбранные категории должны быть ВСЕГДА на русском языке, независимо от языка оригинала статьи.
 
-                       Structure:
+                       Структура ответа:
                        {
-                           "summary": "your concise summary here",
-                           "category": ["category1", "category2"]
+                           "summary": "твое краткое резюме здесь",
+                           "category": ["категория1", "категория2"]
                        }
 
-                       Article:
+                       Статья:
                        {{trimmed}}
                        """,
             Stream = false,
             Options = new RequestOptions 
             {
-                Temperature = 0.3f, 
-                NumPredict = 500,   
+                Temperature = 0.35f, 
+                NumPredict = 600,   
             }
         };
 

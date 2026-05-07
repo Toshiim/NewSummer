@@ -24,6 +24,7 @@ public static class DependencyInjection
         services.AddScoped<SubscribeCommand>();
         services.AddScoped<UnsubscribeCommand>();
         services.AddScoped<ShowSubscriptionsCommand>();
+        services.AddScoped<LatestCommand>();
         return services;
     }
 }

@@ -12,6 +12,14 @@ public class ArticleRepository : EfRepository<Article>, IArticleRepository
     public Task<bool> ExistsByUrlAsync(string url, CancellationToken ct)
         =>  DbSet.AnyAsync(a => a.OriginalUrl == url, ct);
     
+    public Task<Article[]> GetLatestArticlesAsync(int count, CancellationToken ct) 
+        => DbSet
+            .AsNoTracking()
+            .OrderBy(a => a.PublicationDate == null)
+            .ThenByDescending(a => a.PublicationDate)
+            .Take(count)
+            .ToArrayAsync(ct);
+    
     public async Task<PagedResult<ArticleDto>> GetPagedArticlesAsync(
         GetArticlesQuery query, 
         CancellationToken ct = default)
