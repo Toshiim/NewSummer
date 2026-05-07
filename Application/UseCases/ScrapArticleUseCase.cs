@@ -42,7 +42,7 @@ public class ScrapArticleUseCase
             {
                 if (await _articles.ExistsByUrlAsync(item.Url, ct)) continue;
 
-                var article = source.AddArticle(item.Url);
+                var article = source.AddArticle(item.Url, item.PublicationTime);
                 var summarizedArticle = await _summarizer.SummarizeAsync(item.RawText, displayNames , ct);
                 
                 var matchedCategories = allCategories

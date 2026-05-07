@@ -12,4 +12,4 @@ public record GetArticlesQuery(
 
 public enum SortOrder { Asc, Desc }
 
-public enum SortBy {DateAdded, Title}
+public enum SortBy {PublicationDate, Title, CreatedAt}

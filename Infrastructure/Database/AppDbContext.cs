@@ -15,5 +15,19 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+        {
+            if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+            {
+                var builder = modelBuilder.Entity(entityType.ClrType);
+
+                builder.HasKey(nameof(BaseEntity.Id));
+
+                builder.Property(nameof(BaseEntity.CreatedAt))
+                    .IsRequired()
+                    .HasColumnType("timestamp with time zone");
+                
+            }
+        }
     }
 }

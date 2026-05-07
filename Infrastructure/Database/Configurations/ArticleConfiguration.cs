@@ -8,11 +8,13 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
 {
     public void Configure(EntityTypeBuilder<Article> builder)
     {
-        builder.HasKey(n => n.Id);
         builder.Property(n => n.OriginalUrl).IsRequired();
         builder.HasIndex(n => n.OriginalUrl).IsUnique();
         builder.Property(n => n.Title);
         builder.Property(n => n.Summary);
+        builder.Property(a => a.PublicationDate)
+            .IsRequired(false)
+            .HasColumnType("timestamp with time zone");
         
         builder.HasMany(a => a.Categories)
             .WithMany()

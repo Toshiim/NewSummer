@@ -9,18 +9,13 @@
         /// <summary>
         /// Уникальный идентификатор сущности.
         /// </summary>
-        public Guid Id { get; protected set; }
+        public Guid Id { get; private set; }
 
         /// <summary>
-        /// Создаёт сущность с указанным идентификатором.
-        /// Используется ORM при восстановлении объектов из БД.
+        /// Время создания сущности
         /// </summary>
-        /// <param name="id">Идентификатор сущности.</param>
-        protected BaseEntity(Guid id)
-        {
-            Id = id;
-        }
-
+        public DateTime CreatedAt { get; private set; }
+        
         /// <summary>
         /// Создаёт сущность с автоматически сгенерированным идентификатором.
         /// Используется при создании новых объектов доменной модели.
@@ -28,6 +23,7 @@
         protected BaseEntity()
         {
             Id = Guid.NewGuid();
+            CreatedAt = DateTime.UtcNow;
         }
 
         /// <summary>

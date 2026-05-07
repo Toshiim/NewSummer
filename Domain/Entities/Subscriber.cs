@@ -19,7 +19,6 @@ public class Subscriber : BaseEntity
     public string UserPlatformId  { get; protected set; }
 
     public string ChatPlatformId  { get; protected set; }
-    public DateTime CreatedAt { get; protected set; }
 
     private readonly List<Category> _categories = new();
     public virtual IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
@@ -29,7 +28,6 @@ public class Subscriber : BaseEntity
         Username = username;
         UserPlatformId = userPlatformId;
         ChatPlatformId = chatPlatformId;
-        CreatedAt = DateTime.UtcNow;
     }
     
     public void SubscribeTo(Category category)

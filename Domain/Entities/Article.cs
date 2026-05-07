@@ -6,18 +6,18 @@ public class Article : BaseEntity
     public string? Summary { get; protected set; }
     public Guid SourceId { get; protected set; }
     public string OriginalUrl { get; protected set; }
-    public DateTime DateAdded { get; protected set; }
+    public DateTimeOffset? PublicationDate { get; protected set; }
     
     private readonly List<Category> _categories = new();
     public IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
 
     protected Article() {}
 
-    internal Article(string originalUrl, Guid sourceId, DateTime dateAdded)
+    internal Article(string originalUrl, Guid sourceId, DateTimeOffset? publicationDate)
     {
         OriginalUrl = originalUrl;
         SourceId = sourceId;
-        DateAdded = dateAdded;
+        PublicationDate = publicationDate;
     }
     
 
