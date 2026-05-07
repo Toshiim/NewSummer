@@ -25,8 +25,8 @@ public class AppDbContext : DbContext
 
                 builder.Property(nameof(BaseEntity.CreatedAt))
                     .IsRequired()
-                    .HasColumnType("timestamp with time zone") 
-                    .HasDefaultValueSql("CURRENT_TIMESTAMP"); 
+                    .HasColumnType("timestamp with time zone");
+                
             }
         }
     }

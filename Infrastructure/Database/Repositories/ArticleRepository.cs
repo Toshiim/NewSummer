@@ -34,7 +34,7 @@ public class ArticleRepository : EfRepository<Article>, IArticleRepository
             (SortBy.Title, SortOrder.Asc)             => q.OrderBy(a => a.Title),
             (SortBy.Title, SortOrder.Desc)            => q.OrderByDescending(a => a.Title),
             (SortBy.PublicationDate, SortOrder.Asc)   => q.OrderBy(a => a.PublicationDate),
-            (SortBy.PublicationDate, SortOrder.Desc)  => q.OrderByDescending(a => a.PublicationDate),
+            (SortBy.PublicationDate, SortOrder.Desc)  => q.OrderBy(a => a.PublicationDate == null).ThenByDescending(a => a.PublicationDate),
             (SortBy.CreatedAt, SortOrder.Asc)         => q.OrderBy(a => a.CreatedAt),
             (SortBy.CreatedAt, SortOrder.Desc)        => q.OrderByDescending(a => a.CreatedAt)
         };
