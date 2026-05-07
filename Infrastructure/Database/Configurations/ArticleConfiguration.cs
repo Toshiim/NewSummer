@@ -12,6 +12,9 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
         builder.HasIndex(n => n.OriginalUrl).IsUnique();
         builder.Property(n => n.Title);
         builder.Property(n => n.Summary);
+        builder.Property(a => a.PublicationDate)
+            .IsRequired(false)
+            .HasColumnType("timestamp with time zone");
         
         builder.HasMany(a => a.Categories)
             .WithMany()

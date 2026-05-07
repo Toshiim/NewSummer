@@ -60,9 +60,12 @@ public class UniversalRssScraper : IScraperService
                     continue;
                 }
 
+                var publicationTime = ExtractPublicationTime(item);
+
                 results.Add(new ScrapedArticle(
-                    url, 
-                    article.Title ?? item.Title.Text, 
+                    url,
+                    article.Title ?? item.Title.Text,
+                    publicationTime,
                     article.TextContent));
                 
                 _logger.LogInformation("Успешно распаршено: {Title}", article.Title);
@@ -77,5 +80,16 @@ public class UniversalRssScraper : IScraperService
         }
 
         return results;
+    }
+    
+    private static DateTimeOffset? ExtractPublicationTime(SyndicationItem item)
+    {
+        if (item.PublishDate != DateTimeOffset.MinValue)
+            return item.PublishDate;
+
+        if (item.LastUpdatedTime != DateTimeOffset.MinValue)
+            return item.LastUpdatedTime;
+
+        return null;
     }
 }

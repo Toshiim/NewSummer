@@ -6,7 +6,7 @@ public record ArticleDto
     public string? Title { get; init; }
     public string? Summary { get; init; }
     public string OriginalUrl { get; init; } = null!;
-    public DateTime PublicationDate { get; init; }
+    public DateTimeOffset? PublicationDate { get; init; }
     public DateTime CreatedAt { get; init; }
     public Guid SourceId { get; init; }
 }
