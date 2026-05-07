@@ -8,7 +8,6 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
 {
     public void Configure(EntityTypeBuilder<Article> builder)
     {
-        builder.HasKey(n => n.Id);
         builder.Property(n => n.OriginalUrl).IsRequired();
         builder.HasIndex(n => n.OriginalUrl).IsUnique();
         builder.Property(n => n.Title);
