@@ -12,6 +12,6 @@ public class GetLatestArticlesUseCase
         _repository =  repository;
     }
 
-    public async Task<ArticleViewModel[]> ExecuteAsync(int count, CancellationToken ct)
-        =>  await _repository.GetLatestArticlesAsync(count, ct);
+    public Task<ArticleViewModel[]> ExecuteAsync(int count, CancellationToken ct)
+        => _repository.GetLatestArticlesAsync(count, ct);
 }
