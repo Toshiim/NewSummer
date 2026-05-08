@@ -12,6 +12,9 @@ public class SubscriberConfiguration : IEntityTypeConfiguration<Subscriber>
         builder.HasIndex(s => s.UserPlatformId).IsUnique();
         builder.Property(s => s.ChatPlatformId).IsRequired();
         builder.Property(s => s.Username);
+        builder.Property(s => s.LastDigestSentAt)
+            .IsRequired(false)
+            .HasColumnType("timestamp with time zone");
 
         builder.HasMany(s => s.Categories)
             .WithMany()
