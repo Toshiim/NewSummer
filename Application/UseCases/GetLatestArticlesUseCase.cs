@@ -1,5 +1,5 @@
 ﻿using Application.Common.Interfaces.Repository;
-using Domain.Entities;
+using Application.Common.Models;
 
 namespace Application.UseCases;
 
@@ -12,6 +12,6 @@ public class GetLatestArticlesUseCase
         _repository =  repository;
     }
 
-    public async Task<Article[]> ExecuteAsync(int count, CancellationToken ct)
+    public async Task<ArticleViewModel[]> ExecuteAsync(int count, CancellationToken ct)
         =>  await _repository.GetLatestArticlesAsync(count, ct);
 }

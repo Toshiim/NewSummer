@@ -12,13 +12,21 @@ public class ArticleRepository : EfRepository<Article>, IArticleRepository
     public Task<bool> ExistsByUrlAsync(string url, CancellationToken ct)
         =>  DbSet.AnyAsync(a => a.OriginalUrl == url, ct);
     
-    public Task<Article[]> GetLatestArticlesAsync(int count, CancellationToken ct) 
-        => DbSet
-            .AsNoTracking()
-            .OrderBy(a => a.PublicationDate == null)
-            .ThenByDescending(a => a.PublicationDate)
-            .Take(count)
-            .ToArrayAsync(ct);
+    public Task<ArticleViewModel[]> GetLatestArticlesAsync(int count, CancellationToken ct) 
+    {
+        var query = from a in DbContext.Articles.AsNoTracking()
+            join s in DbContext.Sources on a.SourceId equals s.Id
+            orderby a.PublicationDate == null, a.PublicationDate descending
+            select new ArticleViewModel(
+                a.Title ?? "Без заголовка",
+                a.Summary ?? "",
+                s.Name,
+                a.OriginalUrl,
+                a.Categories.Select(c => c.DisplayName).ToArray() 
+            );
+
+        return query.Take(count).ToArrayAsync(ct);
+    }
     
     public async Task<PagedResult<ArticleDto>> GetPagedArticlesAsync(
         GetArticlesQuery query, 
