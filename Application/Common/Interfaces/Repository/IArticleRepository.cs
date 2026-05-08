@@ -7,5 +7,5 @@ public interface IArticleRepository: IRepository<Article>
 {
     Task<PagedResult<ArticleDto>> GetPagedArticlesAsync(GetArticlesQuery query, CancellationToken ct);
     Task<bool> ExistsByUrlAsync(string url, CancellationToken ct);
-    Task<Article[]> GetLatestArticlesAsync(int count, CancellationToken ct);
+    Task<ArticleViewModel[]> GetLatestArticlesAsync(int count, CancellationToken ct);
 }
