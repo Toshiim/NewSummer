@@ -1,5 +1,9 @@
-﻿namespace Application.Common.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace Application.Common.Models;
 
 public record SummarizedArticle(
-    string summary,
-    List<string> category);
+    [property: JsonPropertyName("summary")] string Summary,
+    [property: JsonPropertyName("categories")] List<string> Categories, 
+    [property: JsonPropertyName("score")] int ImportanceScore
+);

@@ -42,15 +42,15 @@ public class ScrapArticleUseCase
             {
                 if (await _articles.ExistsByUrlAsync(item.Url, ct)) continue;
 
-                var article = source.AddArticle(item.Url, item.PublicationTime);
+                var article = source.AddArticle(item.Title, item.Url, item.PublicationTime);
                 var summarizedArticle = await _summarizer.SummarizeAsync(item.RawText, displayNames , ct);
                 
                 var matchedCategories = allCategories
-                    .Where(dbCat => summarizedArticle.category
+                    .Where(dbCat => summarizedArticle.Categories
                         .Any(aiCatName => aiCatName.Equals(dbCat.DisplayName, StringComparison.OrdinalIgnoreCase)))
                     .ToList();
                 
-                article.Enrich(item.Title, summarizedArticle.summary, matchedCategories);
+                article.Enrich(summarizedArticle.Summary, summarizedArticle.ImportanceScore, matchedCategories);
                 await _articles.AddAsync(article, ct);
             }
             await _uow.SaveChangesAsync();
