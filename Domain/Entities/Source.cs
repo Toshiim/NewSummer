@@ -26,9 +26,9 @@ public class Source : BaseEntity
         IsActive = true;
     }
 
-    public Article AddArticle(string originalUrl, DateTimeOffset? publicationDate) 
+    public Article AddArticle(string title, string originalUrl, DateTimeOffset? publicationDate) 
     {
-        var article = new Article(originalUrl,  Id, publicationDate);
+        var article = new Article(title, originalUrl,  Id, publicationDate);
         _articles.Add(article);
         return article;
     }

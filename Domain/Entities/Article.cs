@@ -2,8 +2,9 @@
 
 public class Article : BaseEntity
 {
-    public string? Title { get; protected set; }
-    public string? Summary { get; protected set; }
+    public string Title { get; protected set; }
+    public string Summary { get; protected set; }
+    public int ImportanceScore { get; protected set; }
     public Guid SourceId { get; protected set; }
     public string OriginalUrl { get; protected set; }
     public DateTimeOffset? PublicationDate { get; protected set; }
@@ -13,8 +14,9 @@ public class Article : BaseEntity
 
     protected Article() {}
 
-    internal Article(string originalUrl, Guid sourceId, DateTimeOffset? publicationDate)
+    internal Article(string title, string originalUrl, Guid sourceId, DateTimeOffset? publicationDate)
     {
+        Title = title;
         OriginalUrl = originalUrl;
         SourceId = sourceId;
         PublicationDate = publicationDate;
@@ -22,10 +24,10 @@ public class Article : BaseEntity
     
 
 
-    public void Enrich(string title, string summary, IEnumerable<Category> categories)
+    public void Enrich( string summary, int importanceScore, IEnumerable<Category> categories)
     {
-        Title = title;
         Summary = summary;
+        ImportanceScore = importanceScore;
         _categories.AddRange(categories);
     }
 }
