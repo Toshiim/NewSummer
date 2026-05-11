@@ -17,11 +17,14 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
             .IsRequired(false)
             .HasColumnType("timestamp with time zone");
         
+        builder.Property(a => a.SourceId)
+            .IsRequired();
+        
         builder.HasMany(a => a.Categories)
             .WithMany()
             .UsingEntity<Dictionary<string, object>>(
                 "ArticleCategory",
                 j => j.HasOne<Category>().WithMany().HasForeignKey("CategoryId"),
-                j => j.HasOne<Article>().WithMany().HasForeignKey("NewsId"));
+                j => j.HasOne<Article>().WithMany().HasForeignKey("ArticleId"));
     }
 }

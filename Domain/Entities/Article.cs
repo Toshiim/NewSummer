@@ -6,6 +6,7 @@ public class Article : BaseEntity
     public string Summary { get; protected set; }
     public int ImportanceScore { get; protected set; }
     public Guid SourceId { get; protected set; }
+    public virtual Source Source { get; protected set; }
     public string OriginalUrl { get; protected set; }
     public DateTimeOffset? PublicationDate { get; protected set; }
     
