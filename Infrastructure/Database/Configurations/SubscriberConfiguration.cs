@@ -22,7 +22,7 @@ public class SubscriberConfiguration : IEntityTypeConfiguration<Subscriber>
         
         builder.OwnsOne(s => s.Settings, settings =>
         {
-            settings.Property(d => d.NewsCount).HasColumnName("DigestNewsCount");
+            settings.Property(d => d.ArticlesCount).HasColumnName("DigestArticlesCount");
     
             settings.Property(d => d.TargetUtcTime)
                 .HasColumnName("TargetUtcTime")

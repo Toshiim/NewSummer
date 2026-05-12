@@ -2,7 +2,7 @@
 
 public record DigestSettings
 {
-    public int NewsCount { get; init; }
+    public int ArticlesCount { get; init; }
     public TimeSpan TargetUtcTime { get; init; } 
 
     protected DigestSettings() { }
@@ -15,11 +15,11 @@ public record DigestSettings
         if (targetUtcTime < TimeSpan.Zero || targetUtcTime >= TimeSpan.FromDays(1))
             throw new ArgumentException("Некорректное время суток.");
 
-        NewsCount = newsCount;
+        ArticlesCount = newsCount;
         TargetUtcTime = targetUtcTime;
     }
 
-    public static DigestSettings CreateFromUserLocal(int newsCount, TimeOnly userTime, TimeSpan userOffset)
+    public static DigestSettings CreateFromUserLocal(int articlesCount, TimeOnly userTime, TimeSpan userOffset)
     {
         var localTimeAsSpan = userTime.ToTimeSpan();
         
@@ -28,6 +28,6 @@ public record DigestSettings
         if (utcTime < TimeSpan.Zero) utcTime = utcTime.Add(TimeSpan.FromDays(1));
         if (utcTime >= TimeSpan.FromDays(1)) utcTime = utcTime.Subtract(TimeSpan.FromDays(1));
 
-        return new DigestSettings(newsCount, utcTime);
+        return new DigestSettings(articlesCount, utcTime);
     }
 }
