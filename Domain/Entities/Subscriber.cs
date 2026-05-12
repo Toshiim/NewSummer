@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using Domain.ValueObjects;
+
+namespace Domain.Entities;
 
 public class Subscriber : BaseEntity
 {
@@ -20,6 +22,7 @@ public class Subscriber : BaseEntity
 
     public string ChatPlatformId  { get; protected set; }
     public DateTimeOffset? LastDigestSentAt { get; protected set; }
+    public DigestSettings Settings { get; protected set; }
 
     private readonly List<Category> _categories = new();
     public virtual IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
