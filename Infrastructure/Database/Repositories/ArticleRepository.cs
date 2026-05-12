@@ -28,7 +28,7 @@ public class ArticleRepository : EfRepository<Article>, IArticleRepository
         => DbSet
         .AsNoTracking()
         .Where(a => a.PublicationDate >= query.StartDate)
-        .Where(a => a.Categories.Any(cat => query.CategoriesId.Contains(cat.Id)))
+        .Where(a => a.Categories.Any(cat => query.CategoriesIds.Contains(cat.Id)))
         .OrderByDescending(a => a.ImportanceScore)
         .Select(ProjectToViewModel())
         .ToListAsync(ct);

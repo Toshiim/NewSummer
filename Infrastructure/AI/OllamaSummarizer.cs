@@ -60,7 +60,7 @@ public class OllamaSummarizer : ISummaryService
                        Структура ответа:
                        {
                            "summary": "твое краткое резюме здесь",
-                           "categories": ["категория1", "категория2"]
+                           "categories": ["категория1", "категория2"],
                            "score": целое число [1, 10]
                        }
 

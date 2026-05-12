@@ -7,15 +7,15 @@ public record DigestSettings
 
     protected DigestSettings() { }
 
-    internal DigestSettings(int newsCount, TimeSpan targetUtcTime)
+    internal DigestSettings(int articlesCount, TimeSpan targetUtcTime)
     {
-        if (newsCount is < 1 or > 50)
-            throw new ArgumentException("Количество новостей: 1-50");
+        if (articlesCount is < 1 or > 50)
+            throw new ArgumentException("Количество статей: 1-50");
 
         if (targetUtcTime < TimeSpan.Zero || targetUtcTime >= TimeSpan.FromDays(1))
             throw new ArgumentException("Некорректное время суток.");
 
-        ArticlesCount = newsCount;
+        ArticlesCount = articlesCount;
         TargetUtcTime = targetUtcTime;
     }
     
