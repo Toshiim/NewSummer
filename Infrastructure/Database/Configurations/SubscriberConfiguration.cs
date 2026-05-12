@@ -19,5 +19,14 @@ public class SubscriberConfiguration : IEntityTypeConfiguration<Subscriber>
         builder.HasMany(s => s.Categories)
             .WithMany()
             .UsingEntity(j => j.ToTable("SubscriberCategories"));
+        
+        builder.OwnsOne(s => s.Settings, settings =>
+        {
+            settings.Property(d => d.NewsCount).HasColumnName("DigestNewsCount");
+    
+            settings.Property(d => d.TargetUtcTime)
+                .HasColumnName("TargetUtcTime")
+                .HasColumnType("time"); 
+        });
     }
 }
