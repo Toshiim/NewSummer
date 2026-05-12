@@ -22,7 +22,7 @@ public class Subscriber : BaseEntity
 
     public string ChatPlatformId  { get; protected set; }
     public DateTimeOffset? LastDigestSentAt { get; protected set; }
-    public DigestSettings Settings { get; protected set; }
+    public DigestSettings Settings { get; protected set; } = DigestSettings.Default;
 
     private readonly List<Category> _categories = new();
     public virtual IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();

@@ -7,7 +7,7 @@ public record DigestSettings
 
     protected DigestSettings() { }
 
-    public DigestSettings(int newsCount, TimeSpan targetUtcTime)
+    internal DigestSettings(int newsCount, TimeSpan targetUtcTime)
     {
         if (newsCount is < 1 or > 50)
             throw new ArgumentException("Количество новостей: 1-50");
@@ -18,7 +18,9 @@ public record DigestSettings
         ArticlesCount = newsCount;
         TargetUtcTime = targetUtcTime;
     }
-
+    
+    public static DigestSettings Default => new(6, TimeSpan.FromHours(9));
+    
     public static DigestSettings CreateFromUserLocal(int articlesCount, TimeOnly userTime, TimeSpan userOffset)
     {
         var localTimeAsSpan = userTime.ToTimeSpan();

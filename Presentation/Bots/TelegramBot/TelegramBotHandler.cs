@@ -39,6 +39,7 @@ public class TelegramBotHandler
                 "/unsubscribe" => scope.ServiceProvider.GetRequiredService<UnsubscribeCommand>(),
                 "/mysubs" =>  scope.ServiceProvider.GetRequiredService<ShowSubscriptionsCommand>(),
                 "/latest" => scope.ServiceProvider.GetRequiredService<LatestCommand>(),
+                "/digest" => scope.ServiceProvider.GetRequiredService<DigestCommand>(),
                 _ => null
             };
 

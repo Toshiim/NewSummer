@@ -20,11 +20,9 @@ public class Article : BaseEntity
         Title = title;
         OriginalUrl = originalUrl;
         SourceId = sourceId;
-        PublicationDate = publicationDate;
+        PublicationDate = publicationDate?.ToUniversalTime();
     }
     
-
-
     public void Enrich( string summary, int importanceScore, IEnumerable<Category> categories)
     {
         Summary = summary;
