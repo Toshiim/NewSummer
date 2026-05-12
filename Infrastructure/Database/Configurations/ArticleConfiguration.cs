@@ -12,15 +12,19 @@ public class ArticleConfiguration : IEntityTypeConfiguration<Article>
         builder.HasIndex(n => n.OriginalUrl).IsUnique();
         builder.Property(n => n.Title);
         builder.Property(n => n.Summary);
+        builder.Property(n => n.ImportanceScore);
         builder.Property(a => a.PublicationDate)
             .IsRequired(false)
             .HasColumnType("timestamp with time zone");
+        
+        builder.Property(a => a.SourceId)
+            .IsRequired();
         
         builder.HasMany(a => a.Categories)
             .WithMany()
             .UsingEntity<Dictionary<string, object>>(
                 "ArticleCategory",
                 j => j.HasOne<Category>().WithMany().HasForeignKey("CategoryId"),
-                j => j.HasOne<Article>().WithMany().HasForeignKey("NewsId"));
+                j => j.HasOne<Article>().WithMany().HasForeignKey("ArticleId"));
     }
 }

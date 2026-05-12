@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using Domain.ValueObjects;
+
+namespace Domain.Entities;
 
 public class Subscriber : BaseEntity
 {
@@ -19,6 +21,8 @@ public class Subscriber : BaseEntity
     public string UserPlatformId  { get; protected set; }
 
     public string ChatPlatformId  { get; protected set; }
+    public DateTimeOffset? LastDigestSentAt { get; protected set; }
+    public DigestSettings Settings { get; protected set; } = DigestSettings.Default;
 
     private readonly List<Category> _categories = new();
     public virtual IReadOnlyCollection<Category> Categories => _categories.AsReadOnly();
@@ -28,6 +32,7 @@ public class Subscriber : BaseEntity
         Username = username;
         UserPlatformId = userPlatformId;
         ChatPlatformId = chatPlatformId;
+        LastDigestSentAt = null;
     }
     
     public void SubscribeTo(Category category)
@@ -41,5 +46,10 @@ public class Subscriber : BaseEntity
     public void UnsubscribeFrom(Category category)
     {
         _categories.Remove(category);
+    }
+    
+    public void MarkDigestSent()
+    {
+        LastDigestSentAt = DateTimeOffset.UtcNow;
     }
 }

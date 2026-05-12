@@ -14,7 +14,7 @@ public class SourceConfiguration : IEntityTypeConfiguration<Source>
         builder.HasIndex(s => s.FeedUrl).IsUnique();
         
         builder.HasMany(s => s.Articles)
-            .WithOne()
+            .WithOne(a => a.Source)
             .HasForeignKey(n => n.SourceId)
             .OnDelete(DeleteBehavior.Cascade);
     }

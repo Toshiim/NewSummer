@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces.Repository;
+﻿using System.Linq.Expressions;
+using Application.Common.Interfaces.Repository;
 using Application.Common.Models;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -9,23 +10,41 @@ public class ArticleRepository : EfRepository<Article>, IArticleRepository
 {
     public ArticleRepository(AppDbContext dbContext) : base(dbContext){}
     
+    private static Expression<Func<Article, ArticleViewModel>> ProjectToViewModel()
+    {
+        return a => new ArticleViewModel(
+            a.Id,
+            a.Title ?? "",
+            a.Summary ?? "",
+            a.Source.Name, 
+            a.OriginalUrl,
+            a.Categories.Select(c => c.DisplayName).ToArray(),
+            a.Categories.Select(c => c.Id).ToArray(), 
+            a.ImportanceScore
+        );
+    }
+    
+    public Task<List<ArticleViewModel>> GetArticlesForDigestAsync(GetArticlesForDigestQuery query, CancellationToken ct) 
+        => DbSet
+        .AsNoTracking()
+        .Where(a => a.PublicationDate >= query.StartDate)
+        .Where(a => a.Categories.Any(cat => query.CategoriesIds.Contains(cat.Id)))
+        .OrderByDescending(a => a.ImportanceScore)
+        .Select(ProjectToViewModel())
+        .ToListAsync(ct);
+    
     public Task<bool> ExistsByUrlAsync(string url, CancellationToken ct)
         =>  DbSet.AnyAsync(a => a.OriginalUrl == url, ct);
     
     public Task<ArticleViewModel[]> GetLatestArticlesAsync(int count, CancellationToken ct) 
     {
-        var query = from a in DbContext.Articles.AsNoTracking()
-            join s in DbContext.Sources on a.SourceId equals s.Id
-            orderby a.PublicationDate == null, a.PublicationDate descending
-            select new ArticleViewModel(
-                a.Title ?? "Без заголовка",
-                a.Summary ?? "",
-                s.Name,
-                a.OriginalUrl,
-                a.Categories.Select(c => c.DisplayName).ToArray() 
-            );
-
-        return query.Take(count).ToArrayAsync(ct);
+        return DbSet
+            .AsNoTracking()
+            .OrderByDescending(a => a.PublicationDate.HasValue) 
+            .ThenByDescending(a => a.PublicationDate)
+            .Select(ProjectToViewModel()) // Магия проекции
+            .Take(count)
+            .ToArrayAsync(ct);
     }
     
     public async Task<PagedResult<ArticleDto>> GetPagedArticlesAsync(

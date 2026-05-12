@@ -41,19 +41,27 @@ public class OllamaSummarizer : ISummaryService
             Model = _model,
             Format = "json", 
             Prompt = $$"""
-                       Проанализируй предоставленную статью и выполни две задачи:
+                       Проанализируй предоставленную статью и выполни задачи:
                        1. Сделай краткое резюме статьи (2-3 предложения).
                        2. Присвой статье категории, используя ТОЛЬКО предоставленный список категорий.
-
                        Список категорий: [{{categoriesString}}]
-
+                       
+                       3. Оцени общую важность события (score) по шкале от 1 до 10.
+                       
+                       Шкала оценки важности (score):
+                       1-3: Низкая. Узкоспециализированная новость, рядовое событие, малозначительный анонс или гайд.
+                       4-6: Средняя. Значимое событие в своей сфере, полезный материал для широкого круга заинтересованных лиц.
+                       7-8: Высокая. Крупное событие, влияющее на целую индустрию или регион, важный анонс или открытие.
+                       9-10: Критическая. Событие исторического масштаба, кардинально меняющее ситуацию в мире или крупной отрасли, обязательное к прочтению всем.
+                       
                        Ответь СТРОГО в формате JSON.
                        Важно: Текст резюме и выбранные категории должны быть ВСЕГДА на русском языке, независимо от языка оригинала статьи.
 
                        Структура ответа:
                        {
                            "summary": "твое краткое резюме здесь",
-                           "category": ["категория1", "категория2"]
+                           "categories": ["категория1", "категория2"],
+                           "score": целое число [1, 10]
                        }
 
                        Статья:
@@ -62,7 +70,7 @@ public class OllamaSummarizer : ISummaryService
             Stream = false,
             Options = new RequestOptions 
             {
-                Temperature = 0.35f, 
+                Temperature = 0.3f, 
                 NumPredict = 600,   
             }
         };
@@ -79,7 +87,7 @@ public class OllamaSummarizer : ISummaryService
             if (string.IsNullOrWhiteSpace(rawContent))
             {
                 _logger.LogWarning("Ollama returned NOTHING. Model: {Model}", _model);
-                return new SummarizedArticle("Ошибка: пустой ответ модели", []);
+                return new SummarizedArticle("Ошибка: пустой ответ модели", [],0);
             }
 
             var jsonMatch = ExtractJson(rawContent);
@@ -91,13 +99,13 @@ public class OllamaSummarizer : ISummaryService
                 throw new JsonException("Failed to deserialize Ollama response");
             }
 
-            _logger.LogInformation("Ollama success. Categories found: {Count}", summarized.category.Count);
+            _logger.LogInformation("Ollama success. Categories found: {Count}", summarized.Categories.Count);
             return summarized;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Ollama summarization failed");
-            return new SummarizedArticle($"Ошибка: {ex.Message}", []);
+            return new SummarizedArticle($"Ошибка: {ex.Message}",[],0 );
         }
     }
 

@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260512123402_add-digest-settings")]
+    partial class adddigestsettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,9 +234,9 @@ namespace Migrations.Migrations
                             b1.Property<Guid>("SubscriberId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<int>("ArticlesCount")
+                            b1.Property<int>("NewsCount")
                                 .HasColumnType("integer")
-                                .HasColumnName("DigestArticlesCount");
+                                .HasColumnName("DigestNewsCount");
 
                             b1.Property<TimeSpan>("TargetUtcTime")
                                 .HasColumnType("time")

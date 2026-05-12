@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260508163331_add-inportance-score")]
+    partial class addinportancescore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,15 +27,15 @@ namespace Migrations.Migrations
 
             modelBuilder.Entity("ArticleCategory", b =>
                 {
-                    b.Property<Guid>("ArticleId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("ArticleId", "CategoryId");
+                    b.Property<Guid>("NewsId")
+                        .HasColumnType("uuid");
 
-                    b.HasIndex("CategoryId");
+                    b.HasKey("CategoryId", "NewsId");
+
+                    b.HasIndex("NewsId");
 
                     b.ToTable("ArticleCategory");
                 });
@@ -165,9 +168,6 @@ namespace Migrations.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTimeOffset?>("LastDigestSentAt")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("UserPlatformId")
                         .IsRequired()
                         .HasColumnType("text");
@@ -185,15 +185,15 @@ namespace Migrations.Migrations
 
             modelBuilder.Entity("ArticleCategory", b =>
                 {
-                    b.HasOne("Domain.Entities.Article", null)
-                        .WithMany()
-                        .HasForeignKey("ArticleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Domain.Entities.Category", null)
                         .WithMany()
                         .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Article", null)
+                        .WithMany()
+                        .HasForeignKey("NewsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -215,39 +215,10 @@ namespace Migrations.Migrations
 
             modelBuilder.Entity("Domain.Entities.Article", b =>
                 {
-                    b.HasOne("Domain.Entities.Source", "Source")
+                    b.HasOne("Domain.Entities.Source", null)
                         .WithMany("Articles")
                         .HasForeignKey("SourceId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Source");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Subscriber", b =>
-                {
-                    b.OwnsOne("Domain.ValueObjects.DigestSettings", "Settings", b1 =>
-                        {
-                            b1.Property<Guid>("SubscriberId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("ArticlesCount")
-                                .HasColumnType("integer")
-                                .HasColumnName("DigestArticlesCount");
-
-                            b1.Property<TimeSpan>("TargetUtcTime")
-                                .HasColumnType("time")
-                                .HasColumnName("TargetUtcTime");
-
-                            b1.HasKey("SubscriberId");
-
-                            b1.ToTable("Subscribers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SubscriberId");
-                        });
-
-                    b.Navigation("Settings")
                         .IsRequired();
                 });
 

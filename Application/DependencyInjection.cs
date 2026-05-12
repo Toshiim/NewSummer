@@ -19,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<UnsubscribeForCategoresUseCase>();
         services.AddScoped<ShowSubscriptionsUseCase>();
         services.AddScoped<GetLatestArticlesUseCase>();
+        services.AddScoped<GetPersonalDigestUseCase>();
         return services;
     }
 }

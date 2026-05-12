@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260511114919_add-article-navigation-to-source")]
+    partial class addarticlenavigationtosource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,33 +225,6 @@ namespace Migrations.Migrations
                         .IsRequired();
 
                     b.Navigation("Source");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Subscriber", b =>
-                {
-                    b.OwnsOne("Domain.ValueObjects.DigestSettings", "Settings", b1 =>
-                        {
-                            b1.Property<Guid>("SubscriberId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("ArticlesCount")
-                                .HasColumnType("integer")
-                                .HasColumnName("DigestArticlesCount");
-
-                            b1.Property<TimeSpan>("TargetUtcTime")
-                                .HasColumnType("time")
-                                .HasColumnName("TargetUtcTime");
-
-                            b1.HasKey("SubscriberId");
-
-                            b1.ToTable("Subscribers");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SubscriberId");
-                        });
-
-                    b.Navigation("Settings")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Entities.Source", b =>

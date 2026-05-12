@@ -5,6 +5,7 @@ using Hangfire.PostgreSql;
 using Infrastructure.AI;
 using Infrastructure.Database;
 using Infrastructure.Database.Repositories;
+using Infrastructure.FiltrationService;
 using Infrastructure.Scrapers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -52,7 +53,8 @@ public static class DependencyInjection
         services.AddHangfire(config => config
             .UsePostgreSqlStorage(connectionString));
         services.AddHangfireServer();
-        
+
+        services.AddScoped<IDigestFiltrationService, DigestFiltrationService>();
         return services;
     }
 }
