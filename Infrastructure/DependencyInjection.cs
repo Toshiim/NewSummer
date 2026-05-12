@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repository;
+using Application.Common.Interfaces.Services;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Infrastructure.AI;

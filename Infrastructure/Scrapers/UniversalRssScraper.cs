@@ -1,6 +1,7 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Xml;
 using Application.Common.Interfaces;
+using Application.Common.Interfaces.Services;
 using Application.Common.Models;
 using Domain.Entities;
 using SmartReader;

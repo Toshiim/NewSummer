@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Application.Common.Interfaces.Repository;
+using Application.Common.Interfaces.Services;
 
 namespace Application.UseCases;
 
