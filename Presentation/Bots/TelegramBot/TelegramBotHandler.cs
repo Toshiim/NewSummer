@@ -40,6 +40,7 @@ public class TelegramBotHandler
                 "/mysubs" =>  scope.ServiceProvider.GetRequiredService<ShowSubscriptionsCommand>(),
                 "/latest" => scope.ServiceProvider.GetRequiredService<LatestCommand>(),
                 "/digest" => scope.ServiceProvider.GetRequiredService<DigestCommand>(),
+                "/settings" => scope.ServiceProvider.GetRequiredService<SettingsCommand>(),
                 "/me" => scope.ServiceProvider.GetRequiredService<MeCommand>(),
                 _ => null
             };
