@@ -40,6 +40,7 @@ public class TelegramBotHandler
                 "/mysubs" =>  scope.ServiceProvider.GetRequiredService<ShowSubscriptionsCommand>(),
                 "/latest" => scope.ServiceProvider.GetRequiredService<LatestCommand>(),
                 "/digest" => scope.ServiceProvider.GetRequiredService<DigestCommand>(),
+                "/me" => scope.ServiceProvider.GetRequiredService<MeCommand>(),
                 _ => null
             };
 
@@ -57,6 +58,7 @@ public class TelegramBotHandler
         catch (Exception ex)
         {
             _logger.LogError(ex, "Ошибка при выполнении команды {Command}", commandName);
+            await sender.SendAsync(update.Message.Chat.Id.ToString(), " Произошла внутренняя ошибка сервера.", ct);
         }
     }
 

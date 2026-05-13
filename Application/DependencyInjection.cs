@@ -20,6 +20,8 @@ public static class DependencyInjection
         services.AddScoped<ShowSubscriptionsUseCase>();
         services.AddScoped<GetLatestArticlesUseCase>();
         services.AddScoped<GetPersonalDigestUseCase>();
+        services.AddScoped<GetSubscriberInfoUseCase>();
+        services.AddScoped<SetSettingsUseCase>();
         return services;
     }
 }
