@@ -52,4 +52,10 @@ public class Subscriber : BaseEntity
     {
         LastDigestSentAt = DateTimeOffset.UtcNow;
     }
+    
+    public void SetSettings(int articlesCount, TimeOnly userTime, TimeSpan userOffset)
+    {
+        var settings = DigestSettings.CreateFromUserLocal(articlesCount, userTime, userOffset);
+        Settings = settings;
+    }
 }

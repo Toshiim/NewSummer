@@ -4,10 +4,11 @@ public record DigestSettings
 {
     public int ArticlesCount { get; init; }
     public TimeSpan TargetUtcTime { get; init; } 
+    public TimeSpan UserOffset { get; init; }
 
     protected DigestSettings() { }
 
-    internal DigestSettings(int articlesCount, TimeSpan targetUtcTime)
+    internal DigestSettings(int articlesCount, TimeSpan targetUtcTime,  TimeSpan userOffset)
     {
         if (articlesCount is < 1 or > 50)
             throw new ArgumentException("Количество статей: 1-50");
@@ -17,11 +18,12 @@ public record DigestSettings
 
         ArticlesCount = articlesCount;
         TargetUtcTime = targetUtcTime;
+        UserOffset = userOffset;
     }
     
-    public static DigestSettings Default => new(6, TimeSpan.FromHours(9));
+    internal static DigestSettings Default => new(6, TimeSpan.FromHours(9), TimeSpan.FromHours(3));
     
-    public static DigestSettings CreateFromUserLocal(int articlesCount, TimeOnly userTime, TimeSpan userOffset)
+    internal static DigestSettings CreateFromUserLocal(int articlesCount, TimeOnly userTime, TimeSpan userOffset)
     {
         var localTimeAsSpan = userTime.ToTimeSpan();
         
@@ -30,6 +32,6 @@ public record DigestSettings
         if (utcTime < TimeSpan.Zero) utcTime = utcTime.Add(TimeSpan.FromDays(1));
         if (utcTime >= TimeSpan.FromDays(1)) utcTime = utcTime.Subtract(TimeSpan.FromDays(1));
 
-        return new DigestSettings(articlesCount, utcTime);
+        return new DigestSettings(articlesCount, utcTime, userOffset);
     }
 }
