@@ -14,6 +14,16 @@ public class UnsubscribeCommand : IBotCommand
 
     public async Task ExecuteAsync(UserContext userContext, string args, IMessageSender sender, CancellationToken ct)
     {
+        if (string.IsNullOrWhiteSpace(args))
+            throw new CommandValidationException($"""
+                                                  🔌 *Как отписаться:*
+                                                  Введите теги категорий, которые вам больше не интересны.
+
+                                                  Пример: `/unsubscribe politics war`
+
+                                                  _Ваши текущие подписки можно глянуть через /mysubs_
+                                                  """);
+        
         var tags = args.Split(new[] { ' ', ',', ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
         
         var userSubscription = await _useCase.ExecuteAsync(userContext.UserId, tags, ct);

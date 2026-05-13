@@ -14,6 +14,16 @@ public class SubscribeCommand : IBotCommand
 
     public async Task ExecuteAsync(UserContext userContext, string args, IMessageSender sender, CancellationToken ct)
     {
+        if (string.IsNullOrWhiteSpace(args)) 
+            throw new CommandValidationException($"""
+                                                  📌 *Как подписаться на категории:*
+                                                  Введите через пробел теги категорий.
+
+                                                  Пример: `/subscribe world cats games`
+
+                                                  _Список всех доступных тегов можно увидеть через /topics_
+                                                  """);
+        
         var tags = args.Split(new[] { ' ', ',', ';', '|' }, StringSplitOptions.RemoveEmptyEntries);
         
         var userSubscription = await _useCase.ExecuteAsync(userContext.UserId, tags, ct);

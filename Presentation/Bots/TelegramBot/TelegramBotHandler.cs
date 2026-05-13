@@ -55,6 +55,10 @@ public class TelegramBotHandler
                 await command.ExecuteAsync(userContext, args, sender, ct);
             }
         }
+        catch (CommandValidationException ex)
+        {
+            await sender.SendAsync(update.Message.Chat.Id.ToString(), ex.Message, ct);
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Ошибка при выполнении команды {Command}", commandName);
