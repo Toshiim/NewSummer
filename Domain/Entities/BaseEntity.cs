@@ -51,5 +51,31 @@
         {
             return Id.GetHashCode();
         }
+        
+        /// <summary>
+        /// Перегрузка оператора равенства.
+        /// </summary>
+        public static bool operator ==(BaseEntity? first, BaseEntity? second)
+        {
+            if (ReferenceEquals(first, second))
+            {
+                return true;
+            }
+
+            if (first is null || second is null)
+            {
+                return false;
+            }
+
+            return first.Equals(second);
+        }
+
+        /// <summary>
+        /// Перегрузка оператора неравенства.
+        /// </summary>
+        public static bool operator !=(BaseEntity? first, BaseEntity? second)
+        {
+            return !(first == second);
+        }
     }
 }
